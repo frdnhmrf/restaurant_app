@@ -20,15 +20,13 @@ Map<String, dynamic> _$$_AddProductResponseModelToJson(
       'meta': instance.meta,
     };
 
-_$_Restaurant _$$_RestaurantFromJson(Map<String, dynamic> json) =>
-    _$_Restaurant(
+_$_Data _$$_DataFromJson(Map<String, dynamic> json) => _$_Data(
       id: json['id'] as int,
       attributes:
           Attributes.fromJson(json['attributes'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_RestaurantToJson(_$_Restaurant instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$_DataToJson(_$_Data instance) => <String, dynamic>{
       'id': instance.id,
       'attributes': instance.attributes,
     };
@@ -44,7 +42,7 @@ _$_Attributes _$$_AttributesFromJson(Map<String, dynamic> json) =>
       updatedAt: DateTime.parse(json['updatedAt'] as String),
       publishedAt: DateTime.parse(json['publishedAt'] as String),
       photo: json['photo'] as String?,
-      userId: json['userId'] as String,
+      userId: json['userId'] as String?,
     );
 
 Map<String, dynamic> _$$_AttributesToJson(_$_Attributes instance) =>

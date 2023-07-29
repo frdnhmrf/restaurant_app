@@ -17,7 +17,7 @@ class GetAllProductBloc extends Bloc<GetAllProductEvent, GetAllProductState> {
       final result = await dataSource.getAll();
       result.fold(
         (l) => emit(const _Error()),
-        (data) => emit(_Loaded(data)),
+        (r) => emit(_Loaded(r)),
       );
     });
   }

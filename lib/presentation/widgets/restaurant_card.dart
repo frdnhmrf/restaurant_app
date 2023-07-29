@@ -14,7 +14,7 @@ class RestaurantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      // onTap: () => context.push('${DetailRestaurantPage.routeName}/${data.id}'),
+      onTap: () => context.push('${DetailRestaurantPage.routeName}/${data.id}'),
       child: Card(
         child: ListTile(
           title: Text(data.attributes.name),

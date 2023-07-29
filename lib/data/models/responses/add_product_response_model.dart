@@ -19,9 +19,10 @@ class Restaurant with _$Restaurant {
   const factory Restaurant({
     required int id,
     required Attributes attributes,
-  }) = _Restaurant;
+  }) = _Data;
 
-  factory Restaurant.fromJson(Map<String, dynamic> json) => _$RestaurantFromJson(json);
+  factory Restaurant.fromJson(Map<String, dynamic> json) =>
+      _$RestaurantFromJson(json);
 }
 
 @freezed
@@ -36,7 +37,7 @@ class Attributes with _$Attributes {
     required DateTime updatedAt,
     required DateTime publishedAt,
     String? photo,
-    required String userId,
+    String? userId,
   }) = _Attributes;
 
   factory Attributes.fromJson(Map<String, dynamic> json) =>
@@ -49,4 +50,3 @@ class Meta with _$Meta {
 
   factory Meta.fromJson(Map<String, dynamic> json) => _$MetaFromJson(json);
 }
-

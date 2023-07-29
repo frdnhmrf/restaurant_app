@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:restaurant_app/data/local_datasources/auth_local_datasource.dart';
 import 'package:restaurant_app/presentation/pages/add_restaurant_page.dart';
+import 'package:restaurant_app/presentation/pages/detail_restaurant_page.dart';
 import 'package:restaurant_app/presentation/pages/home_page.dart';
 import 'package:restaurant_app/presentation/pages/login_page.dart';
 import 'package:restaurant_app/presentation/pages/my_restaurant_page.dart';
@@ -21,6 +22,13 @@ final goRouter = GoRouter(
     GoRoute(
       path: RegisterPage.routeName,
       builder: (context, state) => const RegisterPage(),
+    ),
+    GoRoute(
+      path: '${DetailRestaurantPage.routeName}/:restaurantId',
+      builder: (context, state) {
+        final id = int.parse(state.pathParameters['restaurantId']!);
+        return DetailRestaurantPage(id: id);
+      },
     ),
     GoRoute(
       path: AddRestaurantPage.routeName,

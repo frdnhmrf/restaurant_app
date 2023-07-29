@@ -11,9 +11,9 @@ import 'package:restaurant_app/data/models/responses/products_response_model.dar
 class RestaurantDataSource {
   Future<Either<String, ProductsResponseModel>> getAll() async {
     final response = await http.get(
-      Uri.parse("${Constants.baseUrl}/restaurants"),
+      Uri.parse('${Constants.baseUrl}/restaurants'),
       headers: <String, String>{
-        "Content-Type": "application/json; charset=UTF-8",
+        'Content-Type': 'application/json; charset=UTF-8',
       },
     );
 
@@ -24,7 +24,27 @@ class RestaurantDataSource {
         ),
       );
     } else {
-      return const Left("Gagal mengambil data");
+      return const Left('Gagal mengambil data');
+    }
+  }
+
+
+  Future<Either<String, AddProductResponseModel>> getById(int id) async {
+    final response = await http.get(
+      Uri.parse('${Constants.baseUrl}/restaurants/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return Right(
+        AddProductResponseModel.fromJson(
+          jsonDecode(response.body),
+        ),
+      );
+    } else {
+      return const Left('Gagal mengambil data');
     }
   }
 

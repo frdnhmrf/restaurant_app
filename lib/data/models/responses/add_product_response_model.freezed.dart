@@ -198,7 +198,7 @@ abstract class _AddProductResponseModel implements AddProductResponseModel {
 }
 
 Restaurant _$RestaurantFromJson(Map<String, dynamic> json) {
-  return _Restaurant.fromJson(json);
+  return _Data.fromJson(json);
 }
 
 /// @nodoc
@@ -261,11 +261,9 @@ class _$RestaurantCopyWithImpl<$Res, $Val extends Restaurant>
 }
 
 /// @nodoc
-abstract class _$$_RestaurantCopyWith<$Res>
-    implements $RestaurantCopyWith<$Res> {
-  factory _$$_RestaurantCopyWith(
-          _$_Restaurant value, $Res Function(_$_Restaurant) then) =
-      __$$_RestaurantCopyWithImpl<$Res>;
+abstract class _$$_DataCopyWith<$Res> implements $RestaurantCopyWith<$Res> {
+  factory _$$_DataCopyWith(_$_Data value, $Res Function(_$_Data) then) =
+      __$$_DataCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, Attributes attributes});
@@ -275,11 +273,10 @@ abstract class _$$_RestaurantCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RestaurantCopyWithImpl<$Res>
-    extends _$RestaurantCopyWithImpl<$Res, _$_Restaurant>
-    implements _$$_RestaurantCopyWith<$Res> {
-  __$$_RestaurantCopyWithImpl(
-      _$_Restaurant _value, $Res Function(_$_Restaurant) _then)
+class __$$_DataCopyWithImpl<$Res>
+    extends _$RestaurantCopyWithImpl<$Res, _$_Data>
+    implements _$$_DataCopyWith<$Res> {
+  __$$_DataCopyWithImpl(_$_Data _value, $Res Function(_$_Data) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -288,7 +285,7 @@ class __$$_RestaurantCopyWithImpl<$Res>
     Object? id = null,
     Object? attributes = null,
   }) {
-    return _then(_$_Restaurant(
+    return _then(_$_Data(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -303,11 +300,10 @@ class __$$_RestaurantCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Restaurant implements _Restaurant {
-  const _$_Restaurant({required this.id, required this.attributes});
+class _$_Data implements _Data {
+  const _$_Data({required this.id, required this.attributes});
 
-  factory _$_Restaurant.fromJson(Map<String, dynamic> json) =>
-      _$$_RestaurantFromJson(json);
+  factory _$_Data.fromJson(Map<String, dynamic> json) => _$$_DataFromJson(json);
 
   @override
   final int id;
@@ -323,7 +319,7 @@ class _$_Restaurant implements _Restaurant {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Restaurant &&
+            other is _$_Data &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.attributes, attributes) ||
                 other.attributes == attributes));
@@ -336,24 +332,22 @@ class _$_Restaurant implements _Restaurant {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RestaurantCopyWith<_$_Restaurant> get copyWith =>
-      __$$_RestaurantCopyWithImpl<_$_Restaurant>(this, _$identity);
+  _$$_DataCopyWith<_$_Data> get copyWith =>
+      __$$_DataCopyWithImpl<_$_Data>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RestaurantToJson(
+    return _$$_DataToJson(
       this,
     );
   }
 }
 
-abstract class _Restaurant implements Restaurant {
-  const factory _Restaurant(
-      {required final int id,
-      required final Attributes attributes}) = _$_Restaurant;
+abstract class _Data implements Restaurant {
+  const factory _Data(
+      {required final int id, required final Attributes attributes}) = _$_Data;
 
-  factory _Restaurant.fromJson(Map<String, dynamic> json) =
-      _$_Restaurant.fromJson;
+  factory _Data.fromJson(Map<String, dynamic> json) = _$_Data.fromJson;
 
   @override
   int get id;
@@ -361,8 +355,7 @@ abstract class _Restaurant implements Restaurant {
   Attributes get attributes;
   @override
   @JsonKey(ignore: true)
-  _$$_RestaurantCopyWith<_$_Restaurant> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_DataCopyWith<_$_Data> get copyWith => throw _privateConstructorUsedError;
 }
 
 Attributes _$AttributesFromJson(Map<String, dynamic> json) {
@@ -380,7 +373,7 @@ mixin _$Attributes {
   DateTime get updatedAt => throw _privateConstructorUsedError;
   DateTime get publishedAt => throw _privateConstructorUsedError;
   String? get photo => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -404,7 +397,7 @@ abstract class $AttributesCopyWith<$Res> {
       DateTime updatedAt,
       DateTime publishedAt,
       String? photo,
-      String userId});
+      String? userId});
 }
 
 /// @nodoc
@@ -429,7 +422,7 @@ class _$AttributesCopyWithImpl<$Res, $Val extends Attributes>
     Object? updatedAt = null,
     Object? publishedAt = null,
     Object? photo = freezed,
-    Object? userId = null,
+    Object? userId = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -468,10 +461,10 @@ class _$AttributesCopyWithImpl<$Res, $Val extends Attributes>
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: null == userId
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -494,7 +487,7 @@ abstract class _$$_AttributesCopyWith<$Res>
       DateTime updatedAt,
       DateTime publishedAt,
       String? photo,
-      String userId});
+      String? userId});
 }
 
 /// @nodoc
@@ -517,7 +510,7 @@ class __$$_AttributesCopyWithImpl<$Res>
     Object? updatedAt = null,
     Object? publishedAt = null,
     Object? photo = freezed,
-    Object? userId = null,
+    Object? userId = freezed,
   }) {
     return _then(_$_Attributes(
       name: null == name
@@ -556,10 +549,10 @@ class __$$_AttributesCopyWithImpl<$Res>
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: null == userId
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -577,7 +570,7 @@ class _$_Attributes implements _Attributes {
       required this.updatedAt,
       required this.publishedAt,
       this.photo,
-      required this.userId});
+      this.userId});
 
   factory _$_Attributes.fromJson(Map<String, dynamic> json) =>
       _$$_AttributesFromJson(json);
@@ -601,7 +594,7 @@ class _$_Attributes implements _Attributes {
   @override
   final String? photo;
   @override
-  final String userId;
+  final String? userId;
 
   @override
   String toString() {
@@ -661,7 +654,7 @@ abstract class _Attributes implements Attributes {
       required final DateTime updatedAt,
       required final DateTime publishedAt,
       final String? photo,
-      required final String userId}) = _$_Attributes;
+      final String? userId}) = _$_Attributes;
 
   factory _Attributes.fromJson(Map<String, dynamic> json) =
       _$_Attributes.fromJson;
@@ -685,7 +678,7 @@ abstract class _Attributes implements Attributes {
   @override
   String? get photo;
   @override
-  String get userId;
+  String? get userId;
   @override
   @JsonKey(ignore: true)
   _$$_AttributesCopyWith<_$_Attributes> get copyWith =>

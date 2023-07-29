@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restaurant_app/bloc/detail_product/detail_product_bloc.dart';
 import 'package:restaurant_app/bloc/get_all_product/get_all_product_bloc.dart';
+import 'package:restaurant_app/bloc/gmap_bloc/gmap_bloc.dart';
+import 'package:restaurant_app/data/remote_datasources/gmap_datasource.dart';
 import 'package:restaurant_app/data/remote_datasources/restaurant_datasource.dart';
 import 'package:restaurant_app/router/go_router.dart';
 
@@ -13,8 +16,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GetAllProductBloc(RestaurantDataSource()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => GetAllProductBloc(RestaurantDataSource()),
+        ),
+        BlocProvider(
+          create: (context) => DetailProductBloc(RestaurantDataSource()),
+        ),
+        BlocProvider(
+          create: (context) => GmapBloc(GmapDataSource()),
+        )
+      ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',

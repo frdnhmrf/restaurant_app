@@ -14,49 +14,48 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    context.read<GetAllProductBloc>().add(const GetAllProductEvent.get());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
       ),
-      body: Column(
-        children: [
-          BlocBuilder<GetAllProductBloc, GetAllProductState>(
-            builder: (context, state) {
-              print(state);
-              return state.maybeWhen(
-                error: () {
-                  return const Center(
-                    child: Text('Error'),
+      body: BlocBuilder<GetAllProductBloc, GetAllProductState>(
+        builder: (context, state) {
+          return state.when(
+            error: () {
+              return const Center(
+                child: Text('Error'),
+              );
+            },
+            initial: () {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+            loading: () {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+            loaded: (data) {
+              return ListView.builder(
+                itemCount: data.data.length,
+                itemBuilder: (context, index) {
+                  final restaurant = data.data[index];
+                  return RestaurantCard(
+                    data: restaurant,
                   );
-                },
-                initial: () {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-                loaded: (data) {
-                  return ListView.builder(
-                    itemCount: data.data.length,
-                    itemBuilder: (context, index) {
-                      final restaurant = data.data[index];
-                      return RestaurantCard(
-                        data: restaurant,
-                      );
-                    },
-                  );
-                },
-                orElse: () {
-                  return const SizedBox();
                 },
               );
             },
-          ),
-          ElevatedButton(
-            onPressed: () {},
-            child: const Text('Go to Add Restaurant Page'),
-          )
-        ],
+          );
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) {
