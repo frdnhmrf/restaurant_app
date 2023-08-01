@@ -10,11 +10,24 @@ class AuthLocalDataSource {
     return res;
   }
 
+  Future<bool> removeAuthData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final res = prefs.remove('auth');
+    return res;
+  }
+
   Future<String> getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final authData = prefs.getString('auth') ?? "";
     final model = AuthResponseModel.fromJson(jsonDecode(authData));
     return model.jwt;
+  }
+
+  Future<int> getUserId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final authData = prefs.getString('auth') ?? "";
+    final model = AuthResponseModel.fromJson(jsonDecode(authData));
+    return model.user.id;
   }
 
   Future<bool> isLogin() async{

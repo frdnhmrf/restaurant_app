@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:restaurant_app/presentation/pages/resgister_page.dart';
+import 'package:restaurant_app/bloc/login/login_bloc.dart';
+import 'package:restaurant_app/data/local_datasources/auth_local_datasource.dart';
+import 'package:restaurant_app/data/models/requests/login_request_model.dart';
+import 'package:restaurant_app/presentation/pages/my_restaurant_page.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/login';
@@ -13,6 +17,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController? _emailController;
   TextEditingController? _passwordController;
+  bool isHide = true;
 
   @override
   void initState() {
@@ -59,28 +64,76 @@ class _LoginPageState extends State<LoginPage> {
               ),
               TextField(
                 controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(),
+                obscureText: isHide,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  hintText: "Password",
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      isHide
+                          ? Icons.remove_red_eye
+                          : Icons.remove_red_eye_outlined,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isHide = !isHide;
+                      });
+                    },
+                  ),
                 ),
               ),
               const SizedBox(
                 height: 30,
               ),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('Login'),
+              BlocConsumer<LoginBloc, LoginState>(
+                listener: (context, state) {
+                  state.maybeWhen(
+                    orElse: () {},
+                    error: (message) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Login Failed : $message"),
+                        ),
+                      );
+                    },
+                    loaded: (model) async {
+                      await AuthLocalDataSource().saveAuthData(model);
+                      context.go(MyRestaurantPage.routeName);
+                    },
+                  );
+                },
+                builder: (context, state) {
+                  return state.maybeWhen(
+                    orElse: () {
+                      return ElevatedButton(
+                        onPressed: () async {
+                          final requestModel = LoginRequestModel(
+                            identifier: _emailController!.text,
+                            password: _passwordController!.text,
+                          );
+                          context
+                              .read<LoginBloc>()
+                              .add(LoginEvent.add(requestModel));
+                        },
+                        child: const Text('Login'),
+                      );
+                    },
+                    loading: () {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  );
+                },
               ),
               const SizedBox(
                 height: 10,
               ),
               TextButton(
-                onPressed: () {
-                  context.go(RegisterPage.routeName);
-                },
-                child: const Text("Don't have an account?"),
-              )
+                  onPressed: () {
+                    context.push(MyRestaurantPage.routeName);
+                  },
+                  child: const Text("Don't have an account?")),
             ],
           ),
         ),

@@ -18,24 +18,24 @@ class AuthDataSource {
       },
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       return Right(AuthResponseModel.fromJson(jsonDecode(response.body)));
     } else {
       return const Left("API Error");
     }
   }
 
-   Future<Either<String, AuthResponseModel>> login(
+  Future<Either<String, AuthResponseModel>> login(
       LoginRequestModel model) async {
     final response = await http.post(
-      Uri.parse('${Constants.baseUrl}/auth/local/register'),
+      Uri.parse('${Constants.baseUrl}/auth/local'),
       body: jsonEncode(model.toJson()),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       return Right(AuthResponseModel.fromJson(jsonDecode(response.body)));
     } else {
       return const Left("API Error");

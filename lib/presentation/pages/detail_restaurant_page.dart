@@ -87,35 +87,47 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                     model.data.attributes.photo ??
                         'https://picsum.photos/200/300',
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text(model.data.attributes.name),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text(model.data.attributes.description),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text(model.data.attributes.address),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  SizedBox(
-                    height: 200,
-                    child: GoogleMap(
-                      mapType: MapType.normal,
-                      markers: markers,
-                      initialCameraPosition: CameraPosition(
-                        target: LatLng(
-                          lat,
-                          lng,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 16,
                         ),
-                        zoom: 15,
-                      ),
+                        Text(model.data.attributes.name),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Text(model.data.attributes.description),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Text(model.data.attributes.address),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        SizedBox(
+                          height: 200,
+                          child: GoogleMap(
+                            mapType: MapType.normal,
+                            markers: markers,
+                            initialCameraPosition: CameraPosition(
+                              target: LatLng(
+                                lat,
+                                lng,
+                              ),
+                              zoom: 15,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                      ],
                     ),
-                  ),
+                  )
                 ],
               );
             },

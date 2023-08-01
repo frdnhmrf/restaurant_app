@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Home'),
       ),
       body: BlocBuilder<GetAllProductBloc, GetAllProductState>(
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
           return state.when(
             error: () {
               return const Center(
-                child: Text('Error'),
+                child: Text('Belum ada data'),
               );
             },
             initial: () {
@@ -45,11 +46,25 @@ class _HomePageState extends State<HomePage> {
             },
             loaded: (data) {
               return ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 itemCount: data.data.length,
                 itemBuilder: (context, index) {
                   final restaurant = data.data[index];
-                  return RestaurantCard(
-                    data: restaurant,
+                  if (restaurant == null) {
+                    return const Column(
+                      children: [
+                        SizedBox(height: 100),
+                        Center(
+                          child: Text('Belum ada data'),
+                        ),
+                      ],
+                    );
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: RestaurantCard(
+                      data: restaurant,
+                    ),
                   );
                 },
               );
@@ -60,6 +75,9 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) {
           if (value == 1) {
+            context
+                .read<GetAllProductBloc>()
+                .add(const GetAllProductEvent.getByUserId());
             context.push(MyRestaurantPage.routeName);
           }
         },
@@ -70,7 +88,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'My Account',
+            label: 'My Restaurant',
           ),
         ],
       ),

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restaurant_app/bloc/add_product/add_product_bloc.dart';
 import 'package:restaurant_app/bloc/detail_product/detail_product_bloc.dart';
 import 'package:restaurant_app/bloc/get_all_product/get_all_product_bloc.dart';
 import 'package:restaurant_app/bloc/gmap_bloc/gmap_bloc.dart';
+import 'package:restaurant_app/bloc/login/login_bloc.dart';
+import 'package:restaurant_app/bloc/register/register_bloc.dart';
+import 'package:restaurant_app/data/remote_datasources/auth_datasource.dart';
 import 'package:restaurant_app/data/remote_datasources/gmap_datasource.dart';
 import 'package:restaurant_app/data/remote_datasources/restaurant_datasource.dart';
 import 'package:restaurant_app/router/go_router.dart';
@@ -26,7 +30,16 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => GmapBloc(GmapDataSource()),
-        )
+        ),
+        BlocProvider(
+          create: (context) => RegisterBloc(AuthDataSource()),
+        ),
+        BlocProvider(
+          create: (context) => LoginBloc(AuthDataSource()),
+        ),
+        BlocProvider(
+          create: (context) => AddProductBloc(RestaurantDataSource()),
+        ),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
