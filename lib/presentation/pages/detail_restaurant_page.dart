@@ -1,10 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:restaurant_app/bloc/detail_product/detail_product_bloc.dart';
 import 'package:restaurant_app/bloc/gmap_bloc/gmap_bloc.dart';
+import 'package:restaurant_app/presentation/pages/direction_page.dart';
 
 class DetailRestaurantPage extends StatefulWidget {
   static const routeName = '/detail-restaurant';
@@ -37,28 +36,7 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
     markers.add(marker);
   }
 
-  Future<bool> _getPermission(Location location) async {
-    late bool serviceEnabled;
-    late PermissionStatus permissionGranted;
-
-    serviceEnabled = await location.serviceEnabled();
-    if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
-      if (!serviceEnabled) {
-        return false;
-      }
-    }
-
-    permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        return false;
-      }
-    }
-
-    return true;
-  }
+  LatLng? destinationPosition;
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +57,7 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                   .add(const GmapEvent.getCurrentLocation());
               final lat = double.parse(model.data.attributes.latitude);
               final lng = double.parse(model.data.attributes.longitude);
+              destinationPosition = LatLng(lat, lng);
               createMarker(lat, lng, model.data.attributes.address);
 
               return ListView(
@@ -121,6 +100,41 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                               zoom: 15,
                             ),
                           ),
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        BlocBuilder<GmapBloc, GmapState>(
+                          builder: (context, state) {
+                            return state.maybeWhen(
+                              orElse: () {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              },
+                              error: (error) {
+                                return ScaffoldMessenger(
+                                    child: SnackBar(
+                                  content: Text("Error : $error"),
+                                ));
+                              },
+                              loaded: (model) {
+                                return ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => DirectionPage(
+                                                origin: model.latLng!,
+                                                destination:
+                                                    destinationPosition!,
+                                              )),
+                                    );
+                                  },
+                                  child: const Text('Direction'),
+                                );
+                              },
+                            );
+                          },
                         ),
                         const SizedBox(
                           height: 50,

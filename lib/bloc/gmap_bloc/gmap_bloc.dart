@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:restaurant_app/data/models/responses/gmap_model.dart';
+import 'package:restaurant_app/data/models/gmap_model.dart';
 import 'package:restaurant_app/data/remote_datasources/gmap_datasource.dart';
 
 part 'gmap_event.dart';

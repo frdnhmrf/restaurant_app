@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:geocoding/geocoding.dart' as geo;
-import 'package:restaurant_app/data/models/responses/gmap_model.dart';
+import 'package:restaurant_app/data/models/gmap_model.dart';
 
 class GmapDataSource {
   Future<bool> _getPermission(Location location) async {
@@ -44,6 +44,21 @@ class GmapDataSource {
         locationData.latitude!,
         locationData.longitude!,
       );
+
+      final info = await geo.placemarkFromCoordinates(
+        latLng.latitude,
+        latLng.longitude,
+      );
+
+      // String? address;
+
+      // if (info.isNotEmpty) {
+      //   final place = info[0];
+      //   address =
+      //       '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+      // } else {
+      //   address = "Location not found ";
+      // }
 
       return Right(GmapModel(
         latLng: latLng,
