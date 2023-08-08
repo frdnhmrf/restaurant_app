@@ -102,7 +102,6 @@ class GmapDataSource {
     String? address;
     if (info.isNotEmpty) {
       final place = info[0];
-
       address =
           '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
     } else {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:restaurant_app/bloc/login/login_bloc.dart';
+import 'package:restaurant_app/bloc/login_bloc/login_bloc.dart';
 import 'package:restaurant_app/data/local_datasources/auth_local_datasource.dart';
 import 'package:restaurant_app/data/models/requests/login_request_model.dart';
 import 'package:restaurant_app/presentation/pages/my_restaurant_page.dart';
